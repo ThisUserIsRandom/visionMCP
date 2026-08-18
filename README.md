@@ -59,8 +59,8 @@ editing the file:
 {
   "provider": "openai",                  // "ollama" | "openai" | "anthropic"
   "api_key": "sk-...",                   // or leave "" and export OPENAI_API_KEY
-  "api_url": "https://api.openai.com/v1", // provider default if omitted
-  "model": "gpt-4o-mini"
+  "api_url": "",                         // "" = provider default
+  "model": ""                            // "" = provider default
 }
 ```
 
@@ -128,13 +128,13 @@ uv run vision-mcp --show-config          # print resolved config (key masked)
 
 ## Tools reference
 
-| Tool               | Arguments                                                        | Returns                                                        |
-|--------------------|------------------------------------------------------------------|----------------------------------------------------------------|
-| `describe_image`   | `image` (path/URL/data-URI), `detail` = `auto\|low\|high`        | JSON: description + image metadata                             |
-| `ask_about_image`  | `image`, `question`                                              | JSON: focused answer + image metadata                          |
-| `extract_text`     | `image`                                                          | JSON: transcribed text + image metadata                        |
-| `compare_images`   | `image_a`, `image_b`, optional `question`                        | JSON: comparison + metadata for both images                    |
-| `server_status`    | —                                                                | Active provider, model, transport, limits (no secrets)         |
+| Tool               | Arguments                                                  | Returns                          |
+|--------------------|------------------------------------------------------------|----------------------------------|
+| `describe_image`   | `image` (path/URL/data-URI)                                | Full description in plain text   |
+| `ask_about_image`  | `image`, `question`                                        | Focused answer                   |
+| `extract_text`     | `image`                                                    | Transcribed / OCR'd text         |
+| `compare_images`   | `image_a`, `image_b`, optional `question`                  | Comparison in plain text         |
+| `server_status`    | —                                                          | Provider, model, transport       |
 
 An `image` argument accepts any of:
 
@@ -143,6 +143,17 @@ An `image` argument accepts any of:
 https://example.com/x.jpg   # URL (downloaded at call time)
 data:image/png;base64,iVBORw0KGgo...   # base64 data URI
 ```
+
+## How it works
+
+Everything funnels through one function in `src/vision_mcp/pipeline.py`:
+
+```text
+image (path / URL / data URI)  →  base64 + mime  →  vision model  →  text
+        _read()                     _encode()         API[provider]    look()
+```
+
+The server tools are thin wrappers: `pipeline.look(cfg, [image], prompt)`.
 
 ---
 

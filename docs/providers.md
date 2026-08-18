@@ -60,8 +60,7 @@ provider (point `api_url` anywhere OpenAI-compatible).
 
 ### Using any OpenAI-compatible endpoint (vLLM, LM Studio, Together, ...)
 
-Point `api_url` at the compatible server. `image_detail` (`auto|low|high`)
-controls how much image resolution is sent.
+Point `api_url` at the compatible server.
 
 ```json
 {

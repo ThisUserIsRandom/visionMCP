@@ -88,9 +88,8 @@ docker run --rm -p 8100:8100 \
 - **Restrict image sources.** Tools accept arbitrary file paths and URLs. In a
   multi-tenant deployment, front the server with your own authorization layer
   and, if needed, an allowlist of paths/hosts.
-- **Rate limits & size caps** are configurable (`max_image_mb`,
-  `max_image_dimension`, `request_timeout_seconds`). Downscaling keeps payloads
-  bounded even for pathological inputs.
+- **Rate limits & size caps** are configurable (`max_image_mb`, `timeout`).
+  Downscaling keeps payloads bounded even for pathological inputs.
 - **Secrets via env** keeps the config file free of keys — recommended for CI/CD.
 
 ## Packaging
