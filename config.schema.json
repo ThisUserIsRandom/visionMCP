@@ -1,0 +1,93 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://example.com/schemas/vision-mcp-config.json",
+  "title": "visionMCP configuration",
+  "description": "Configuration for the visionMCP server. Precedence: overrides > VISIONMCP_* env vars > this file > built-in defaults.",
+  "type": "object",
+  "properties": {
+    "provider": {
+      "type": "string",
+      "enum": ["ollama", "openai", "anthropic"],
+      "default": "ollama",
+      "description": "Which vision backend to use."
+    },
+    "api_key": {
+      "type": "string",
+      "default": "",
+      "description": "API key for openai/anthropic. Leave empty to use OPENAI_API_KEY or ANTHROPIC_API_KEY env var. Ignored for ollama."
+    },
+    "api_url": {
+      "type": "string",
+      "description": "API base URL. Defaults per provider (e.g. http://localhost:11434/v1 for ollama)."
+    },
+    "model": {
+      "type": "string",
+      "description": "Vision model name. Defaults per provider."
+    },
+    "default_prompt": {
+      "type": "string",
+      "description": "System prompt sent with every request."
+    },
+    "image_detail": {
+      "type": "string",
+      "enum": ["auto", "low", "high"],
+      "default": "auto",
+      "description": "Image resolution sent to OpenAI/Ollama-compatible providers."
+    },
+    "max_image_mb": {
+      "type": "number",
+      "minimum": 0.1,
+      "default": 5.0,
+      "description": "Payload ceiling in MB; larger images are downscaled and re-encoded as JPEG."
+    },
+    "max_image_dimension": {
+      "type": "integer",
+      "minimum": 64,
+      "default": 1568,
+      "description": "Longest edge in pixels after automatic resizing."
+    },
+    "jpeg_quality": {
+      "type": "integer",
+      "minimum": 30,
+      "maximum": 95,
+      "default": 82,
+      "description": "JPEG quality used when re-encoding oversized images."
+    },
+    "request_timeout_seconds": {
+      "type": "number",
+      "minimum": 1,
+      "default": 120.0,
+      "description": "Timeout for provider API calls and image URL downloads."
+    },
+    "max_output_tokens": {
+      "type": "integer",
+      "minimum": 1,
+      "default": 2048,
+      "description": "Maximum tokens the vision model may generate per call."
+    },
+    "server_name": {
+      "type": "string",
+      "default": "visionMCP",
+      "description": "Name advertised by the MCP server."
+    },
+    "transport": {
+      "type": "string",
+      "enum": ["stdio", "http", "sse", "streamable-http"],
+      "default": "stdio",
+      "description": "MCP transport. stdio for local MCP clients; http for remote hosting."
+    },
+    "host": {
+      "type": "string",
+      "default": "0.0.0.0",
+      "description": "Bind address for http/sse/streamable-http transports."
+    },
+    "port": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 65535,
+      "default": 8100,
+      "description": "Port for http/sse/streamable-http transports."
+    }
+  },
+  "additionalProperties": false
+}

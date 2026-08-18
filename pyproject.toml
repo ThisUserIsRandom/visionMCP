@@ -1,0 +1,56 @@
+[project]
+name = "vision-mcp"
+version = "0.1.0"
+description = "MCP server that acts as the eyes of a larger reasoning LLM: give it any image (file, URL, or data URI) and it describes, analyses, compares, or OCRs it via Ollama, OpenAI, or Anthropic."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+keywords = ["mcp", "model-context-protocol", "vision", "llm", "ollama", "openai", "anthropic"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+    "fastmcp>=3.0",
+    "openai>=1.40",
+    "anthropic>=0.34",
+    "pillow>=10.0",
+]
+
+[project.scripts]
+vision-mcp = "vision_mcp.__main__:main"
+
+[project.urls]
+Repository = "https://github.com/yourname/visionMCP"
+Documentation = "https://github.com/yourname/visionMCP#readme"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/vision_mcp"]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.6",
+    "pytest>=8.0",
+    "pytest-asyncio>=0.23",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W", "UP", "B"]

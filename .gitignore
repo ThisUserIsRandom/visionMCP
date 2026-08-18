@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+
+# Env / secrets
+.env
+*.env
+
+# OS
+.DS_Store
+
+# IDE
+.idea/
+.vscode/
+
+# Local config that contains real API keys
+config.local.json

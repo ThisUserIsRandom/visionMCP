@@ -1,0 +1,17 @@
+{
+  "provider": "ollama",
+  "api_key": "",
+  "api_url": "http://localhost:11434/v1",
+  "model": "llama3.2-vision",
+  "default_prompt": "You are the vision subsystem (the 'eyes') of a larger reasoning LLM. Study the image(s) provided and answer the user's request accurately, concisely, and in the language of the request.",
+  "image_detail": "auto",
+  "max_image_mb": 5.0,
+  "max_image_dimension": 1568,
+  "jpeg_quality": 82,
+  "request_timeout_seconds": 120.0,
+  "max_output_tokens": 2048,
+  "server_name": "visionMCP",
+  "transport": "stdio",
+  "host": "0.0.0.0",
+  "port": 8100
+}
